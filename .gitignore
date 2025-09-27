@@ -1,0 +1,16 @@
+# Keep environment variables out of version control
+.env
+
+/generated/prisma
+
+# Node dependencies
+node_modules
+
+# Logs
+logs
+*.log
+
+# Misc
+.DS_Store
+.fleet
+.idea
