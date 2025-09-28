@@ -2,7 +2,6 @@ import jwt from 'jsonwebtoken'
 
 const authMiddleware = async (req, res, next) => {
     try {
-        console.log(process.env.JWT_SECRET)
         let token = req.headers['authorization']
         token = token.split(' ')[1]
 

@@ -1,22 +1,9 @@
 version: '3.6'
 services:
-  app:
-    build: ./
-    container_name: todo-app
-    environment:
-      - DATABASE_URL=postgresql://roman@host.docker.internal:5432/Todos?schema=public
-      - JWT_SECRET=your_jwt_secret
-      - NODE_ENV=development
-      - PORT=3010
-    ports:
-      - "3010:3010"
-    depends_on:
-      - db
-    volumes:
-      - .:/app
-  db:
-    image: postgres:13-alpine
-    container_name: postgres-db
+  postgres:
+    image: postgres:13
+    container_name: postgres_db
+    restart: always
     environment:
       - POSTGRES_USER=roman
       - POSTGRES_PASSWORD=roman
@@ -25,5 +12,19 @@ services:
       - "5432:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
+  app:
+    build: ./
+    container_name: todo-app
+    environment:
+      - DATABASE_URL=postgresql://roman:roman@postgres:5432/Todos?schema=public
+      - JWT_SECRET=your_jwt_secret
+      - NODE_ENV=development
+      - PORT=3010
+    ports:
+      - "3010:3010"
+    depends_on:
+      - postgres
+    volumes:
+      - .:/app
 volumes:
   postgres-data:
